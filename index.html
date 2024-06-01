@@ -1,120 +1,119 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Photo Booth</title>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data:;">
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-color: #f0f0f0;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      color: #333;
-    }
-    .step {
-      display: none;
-      width: 100%;
-      max-width: 800px;
-      text-align: center;
-    }
-    #status {
-      font-size: 24px;
-      margin: 20px 0;
-      color: #333;
-    }
-    #video-container {
-      position: relative;
-      width: 640px;
-      height: 480px;
-      margin: 20px 0;
-      background-color: #000;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    }
-    #video {
-      width: 100%;
-      height: auto;
-    }
-    #countdown {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 72px;
-      color: white;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-      display: none;
-    }
-    #session-photos {
-      display: flex;
-      overflow-x: auto;
-      margin-top: 10px;
-      width: 100%;
-      justify-content: center;
-    }
-    #session-photos img {
-      max-height: 100px;
-      margin-right: 10px;
-    }
-    #carousel {
-      display: flex;
-      overflow-x: auto;
-      margin-top: 10px;
-      width: 100%;
-    }
-    #carousel img {
-      max-height: 100px;
-      margin-right: 10px;
-    }
-    #final-image {
-      max-width: 100%;
-      display: block;
-      margin-top: 20px;
-    }
-    .button {
-      padding: 10px 20px;
-      font-size: 16px;
-      color: white;
-      background-color: #007bff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin: 10px;
-    }
-    .button:disabled {
-      background-color: #ccc;
-    }
-  </style>
-</head>
-<body>
-  <h1>Photo Booth</h1>
-  <div class="step" id="step-0">
-    <button id="start-button" class="button">Start Photo Session</button>
-    <div>
-      <label for="template-input">Template Image (optional):</label>
-      <input type="file" id="template-input" accept="image/*">
+  <head>
+    <title>Photo Booth</title>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data:;"
+    />
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        color: #333;
+      }
+      .step {
+        display: none;
+        width: 100%;
+        max-width: 800px;
+        text-align: center;
+      }
+      #status {
+        font-size: 24px;
+        margin: 20px 0;
+        color: #333;
+      }
+      #video-container {
+        position: relative;
+        width: 640px;
+        height: 480px;
+        margin: 20px 0;
+        background-color: #000;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      }
+      #video {
+        width: 100%;
+        height: auto;
+      }
+      #countdown {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 72px;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        display: none;
+      }
+      #session-photos {
+        display: flex;
+        overflow-x: auto;
+        margin-top: 10px;
+        width: 100%;
+        justify-content: center;
+      }
+      #session-photos img {
+        max-height: 100px;
+        margin-right: 10px;
+      }
+      #carousel {
+        display: flex;
+        overflow-x: auto;
+        margin-top: 10px;
+        width: 100%;
+      }
+      #carousel img {
+        max-height: 100px;
+        margin-right: 10px;
+      }
+      #final-image {
+        max-width: 100%;
+        display: block;
+        margin-top: 20px;
+      }
+      .button {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px;
+      }
+      .button:disabled {
+        background-color: #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Photo Booth</h1>
+    <div class="step" id="step-0">
+      <button id="start-button" class="button">Start Photo Session</button>
     </div>
-  </div>
-  <div class="step" id="step-1">
-    <div id="video-container">
-      <video id="video" autoplay></video>
-      <div id="countdown"></div>
+    <div class="step" id="step-1">
+      <div id="video-container">
+        <video id="video" autoplay></video>
+        <div id="countdown"></div>
+      </div>
+      <div id="session-photos"></div>
     </div>
-    <div id="session-photos"></div>
-  </div>
-  <div class="step" id="step-2">
-    <div id="status">Waiting...</div>
-    <div id="carousel"></div>
-  </div>
-  <div class="step" id="step-3">
-    <img id="final-image" src="" alt="Final Image">
-  </div>
-  <script src="src/renderer.js"></script>
-</body>
+    <div class="step" id="step-2">
+      <div id="status">Waiting...</div>
+      <div id="carousel"></div>
+    </div>
+    <div class="step" id="step-3">
+      <img id="final-image" src="" alt="Final Image" />
+    </div>
+    <script src="src/renderer.js"></script>
+  </body>
 </html>
