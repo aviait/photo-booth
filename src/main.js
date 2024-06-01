@@ -3,6 +3,7 @@ const path = require('path');
 const { processPhotos } = require('./photoBooth');
 const { loadTemplateConfig } = require('./templateHandler');
 const { loadPrinterConfig } = require('./printerHandler');
+const fs = require('fs');
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -39,12 +40,24 @@ ipcMain.on('process-photos', async (event, { photoDataArray }) => {
   event.reply('photo-session-complete', finalImagePath);
 
   const printerConfig = loadPrinterConfig();
-  const win = BrowserWindow.fromWebContents(event.sender);
-  win.webContents.print({
-    silent: true,
-    printBackground: true,
-    deviceName: printerConfig.printerName
-  }, (success, errorType) => {
-    if (!success) console.log(errorType);
+  
+  const printWindow = new BrowserWindow({
+    show: false,
+    webPreferences: {
+      contextIsolation: true,
+      enableRemoteModule: false,
+      nodeIntegration: false
+    }
+  });
+
+  printWindow.loadURL(`file://${finalImagePath}`).then(() => {
+    printWindow.webContents.print({
+      silent: true,
+      printBackground: true,
+      deviceName: printerConfig.printerName
+    }, (success, errorType) => {
+      if (!success) console.log(errorType);
+      printWindow.close();
+    });
   });
 });
