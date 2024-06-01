@@ -18,5 +18,9 @@ contextBridge.exposeInMainWorld('electron', {
     return dataUrl;
   },
   sendPhotos: (photoDataArray) => ipcRenderer.send('process-photos', { photoDataArray }),
-  onPhotoSessionComplete: (callback) => ipcRenderer.on('photo-session-complete', (event, finalImagePath) => callback(finalImagePath))
+  onPhotoSessionComplete: (callback) => ipcRenderer.on('photo-session-complete', (event, finalImagePath) => callback(finalImagePath)),
+  sendPhoneNumber: () => {
+    const phoneNumber = document.getElementById('phone-number').value;
+    ipcRenderer.send('send-phone-number', phoneNumber);
+  }
 });

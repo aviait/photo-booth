@@ -8,8 +8,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   const countdown = document.getElementById('countdown');
   const sessionPhotos = document.getElementById('session-photos');
   const steps = document.querySelectorAll('.step');
-  
+
   let currentStep = 0;
+
+
+  function sendPhoneNumberToMain() {
+    const phoneNumber = document.getElementById('phone-number').value;
+    ipcRenderer.send('send-phone-number', phoneNumber);
+  }
 
   function showStep(step) {
     steps.forEach((el, index) => {
@@ -20,10 +26,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   async function startCountdown(seconds) {
     countdown.style.display = 'block';
+    countdown.innerText = 'Sorria';
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
     for (let i = seconds; i > 0; i--) {
       countdown.innerText = i;
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
+
     countdown.style.display = 'none';
   }
 
@@ -38,6 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   async function startPhotoSession() {
+    // sendPhoneNumberToMain();
     resetPhotos();
     console.log('Start button clicked');
     status.innerText = 'Starting photo session...';
@@ -62,6 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const imgElement = document.createElement('img');
       imgElement.src = photoData;
+      imgElement.setAttribute("class", "photo-captured");
       sessionPhotos.appendChild(imgElement);
 
       // Exibe a foto capturada no lugar da webcam por 1 segundo

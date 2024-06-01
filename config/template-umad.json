@@ -1,0 +1,20 @@
+{
+  "print": {
+
+    "templateImage": "assets/photo-templates/template-print-umad.png",
+    "photos": [
+      { "width": 460, "height": 305, "x": 56, "y": 42 },
+      { "width": 460, "height": 305, "x": 550, "y": 42 },
+      { "width": 460, "height": 305, "x": 56, "y": 379 }
+    ]
+  },
+  "instagram": {
+    "templateImage": "assets/photo-templates/template-instagram-umad.png",
+    "photos": [
+      { "width": 771, "height": 466, "x": 155, "y": 57 },
+      { "width": 771, "height": 466, "x": 155, "y": 552 },
+      { "width": 771, "height": 466, "x": 155, "y": 1049 }
+    ]
+  }
+  }
+  
