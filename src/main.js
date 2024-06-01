@@ -43,13 +43,25 @@ ipcMain.on('process-photos', async (event, { photoDataArray }) => {
   event.reply('photo-session-complete', printerFinalImagePath);
 
   const printerConfig = loadPrinterConfig();
-  const win = BrowserWindow.fromWebContents(event.sender);
-  win.webContents.print({
-    silent: true,
-    printBackground: true,
-    deviceName: printerConfig.printerName
-  }, (success, errorType) => {
-    if (!success) console.log(errorType);
+  
+  const printWindow = new BrowserWindow({
+    show: false,
+    webPreferences: {
+      contextIsolation: true,
+      enableRemoteModule: false,
+      nodeIntegration: false
+    }
+  });
+
+  printWindow.loadURL(`file://${finalImagePath}`).then(() => {
+    printWindow.webContents.print({
+      silent: true,
+      printBackground: true,
+      deviceName: printerConfig.printerName
+    }, (success, errorType) => {
+      if (!success) console.log(errorType);
+      printWindow.close();
+    });
   });
 
   console.log('globalPhoneNumber', globalPhoneNumber)
