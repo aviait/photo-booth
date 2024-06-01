@@ -1,0 +1,13 @@
+{
+  "name": "electron-webcam",
+  "version": "1.0.0",
+  "main": "src/main.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^30.0.9",
+    "jimp": "^0.22.12"
+  }
+}

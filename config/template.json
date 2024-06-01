@@ -1,0 +1,9 @@
+{
+    "templateImage": "templates/default.png",
+    "photos": [
+      { "width": 300, "height": 200, "x": 0, "y": 0 },
+      { "width": 300, "height": 200, "x": 600, "y": 200 },
+      { "width": 300, "height": 200, "x": 1200, "y": 400 }
+    ]
+  }
+  
