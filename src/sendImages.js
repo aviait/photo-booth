@@ -17,7 +17,7 @@ async function sendImage(phoneNumber, imagePath) {
     try {
         const imageBase64 = await convertImageToBase64(imagePath);
         const payload = {
-            phoneNumber: '558386766112',
+            phoneNumber: phoneNumber,
             imageBase64: `data:image/jpeg;base64,${imageBase64}`
         };
         const response = await axios.post('http://localhost:3000/send-image', payload);

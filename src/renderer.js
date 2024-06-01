@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
   const startButton = document.getElementById('start-button');
+  const phoneNumberInput = document.getElementById('phone-number');
   const status = document.getElementById('status');
   const finalImage = document.getElementById('final-image');
   const carousel = document.getElementById('carousel');
@@ -11,11 +12,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let currentStep = 0;
 
-
-  function sendPhoneNumberToMain() {
-    const phoneNumber = document.getElementById('phone-number').value;
-    ipcRenderer.send('send-phone-number', phoneNumber);
-  }
 
   function showStep(step) {
     steps.forEach((el, index) => {
@@ -48,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   async function startPhotoSession() {
-    // sendPhoneNumberToMain();
+    window.electron.sendPhoneNumber();
     resetPhotos();
     console.log('Start button clicked');
     status.innerText = 'Starting photo session...';

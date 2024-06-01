@@ -52,12 +52,14 @@ ipcMain.on('process-photos', async (event, { photoDataArray }) => {
     if (!success) console.log(errorType);
   });
 
-  if (globalPhoneNumber || true) {
+  console.log('globalPhoneNumber', globalPhoneNumber)
+  if (globalPhoneNumber) {
     const inputImagePath = path.join(__dirname, 'path_to_your_image.jpg');
     sendImage(globalPhoneNumber, instagramFinalImagePath);
   }
 });
 
 ipcMain.on('send-phone-number', (event, phoneNumber) => {
+  console.log('send-phone-number', phoneNumber)
   globalPhoneNumber = phoneNumber;
 });
