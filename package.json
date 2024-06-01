@@ -9,6 +9,10 @@
   "dependencies": {
     "axios": "^1.7.2",
     "electron": "^30.0.9",
-    "jimp": "^0.22.12"
+    "jimp": "^0.22.12",
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
+    "sharp": "^0.33.4",
+    "venom-bot": "^5.1.0"
   }
 }
