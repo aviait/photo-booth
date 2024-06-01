@@ -1,8 +1,10 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const { processPhotos } = require('./photoBooth');
+
 const { loadTemplateConfig } = require('./templateHandler');
 const { loadPrinterConfig } = require('./printerHandler');
+const { sendImage } = require('./sendImages');
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -33,10 +35,12 @@ app.on('activate', () => {
   }
 });
 
+let globalPhoneNumber;
+
 ipcMain.on('process-photos', async (event, { photoDataArray }) => {
   const templateConfig = loadTemplateConfig();
-  const finalImagePath = await processPhotos(photoDataArray, templateConfig);
-  event.reply('photo-session-complete', finalImagePath);
+  const { printerFinalImagePath, instagramFinalImagePath } = await processPhotos(photoDataArray, templateConfig);
+  event.reply('photo-session-complete', printerFinalImagePath);
 
   const printerConfig = loadPrinterConfig();
   const win = BrowserWindow.fromWebContents(event.sender);
@@ -47,4 +51,13 @@ ipcMain.on('process-photos', async (event, { photoDataArray }) => {
   }, (success, errorType) => {
     if (!success) console.log(errorType);
   });
+
+  if (globalPhoneNumber || true) {
+    const inputImagePath = path.join(__dirname, 'path_to_your_image.jpg');
+    sendImage(globalPhoneNumber, instagramFinalImagePath);
+  }
+});
+
+ipcMain.on('send-phone-number', (event, phoneNumber) => {
+  globalPhoneNumber = phoneNumber;
 });

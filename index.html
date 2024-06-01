@@ -7,23 +7,46 @@
       content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data:;"
     />
     <style>
+      @font-face {
+        font-family: "exemplo";
+        src: url("./assets/fonts/FontsFree-Net-Akira-Expanded-Demo.ttf")
+          format("ttf");
+        font-weight: normal;
+        font-style: normal;
+      }
+
       body {
-        font-family: "Roboto", sans-serif;
+        font-family: "exemplo", sans-serif;
+        color: #fff;
         display: flex;
         flex-direction: column;
         align-items: center;
-        background-color: #f0f0f0;
+        justify-content: center;
         margin: 0;
-        padding: 20px;
-      }
-      h1 {
-        color: #333;
+        /* padding: 20px; */
+        height: 100vh;
+        background-image: url("./assets/imgs/bg-template-umad.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
       }
       .step {
         display: none;
         width: 100%;
-        max-width: 800px;
         text-align: center;
+      }
+      .column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
+        height: 100%;
       }
       #status {
         font-size: 24px;
@@ -32,17 +55,17 @@
       }
       #video-container {
         position: relative;
-        width: 640px;
-        height: 480px;
-        margin: 20px 0;
+        aspect-ratio: 1.5;
+        width: 60%;
+        margin: 0 20px;
+        border: 6px solid #fff;
         background-color: #000;
-        border-radius: 10px;
         overflow: hidden;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
       }
       #video {
         width: 100%;
-        height: auto;
+        height: 100%;
       }
       #countdown {
         position: absolute;
@@ -56,14 +79,26 @@
       }
       #session-photos {
         display: flex;
-        overflow-x: auto;
-        margin-top: 10px;
-        width: 100%;
+        flex-direction: column;
+        overflow-y: auto;
+        margin-left: 10px;
+        width: 30%;
+        height: 100%;
         justify-content: center;
+        align-items: center;
       }
       #session-photos img {
-        max-height: 100px;
         margin-right: 10px;
+        aspect-ratio: 1.5;
+        height: 30%;
+      }
+      .photo-captured {
+        aspect-ratio: 1.5;
+        border: 6px solid #fff;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      }
+      .photo-captured + .photo-captured {
+        margin-top: 35px;
       }
       #carousel {
         display: flex;
@@ -72,7 +107,7 @@
         width: 100%;
       }
       #carousel img {
-        max-height: 100px;
+        max-height: 150px;
         margin-right: 10px;
       }
       #final-image {
@@ -80,15 +115,27 @@
         display: block;
         margin-top: 20px;
       }
+      .input {
+        padding: 10px;
+        width: 330px;
+        font-size: 26px;
+        color: #323232;
+        border: 4px solid white;
+        margin: 10px;
+        margin-top: 30px;
+        font-family: "exemplo", sans-serif;
+      }
       .button {
-        padding: 10px 20px;
-        font-size: 16px;
-        color: white;
-        background-color: #007bff;
+        padding: 20px 50px;
+        width: 350px;
+        font-size: 26px;
+        color: #222645;
+        background-color: white;
         border: none;
-        border-radius: 5px;
         cursor: pointer;
         margin: 10px;
+        margin-top: 30px;
+        font-family: "exemplo", sans-serif;
       }
       .button:disabled {
         background-color: #ccc;
@@ -96,23 +143,30 @@
     </style>
   </head>
   <body>
-    <h1>Photo Booth</h1>
     <div class="step" id="step-0">
-      <button id="start-button" class="button">Start Photo Session</button>
+      <div class="column">
+        <img src="./assets/imgs/logo-template-umad.png" />
+        <input id="phone-number" class="input" placeholder="Whatsapp" />
+        <button id="start-button" class="button">Iniciar</button>
+      </div>
     </div>
     <div class="step" id="step-1">
-      <div id="video-container">
-        <video id="video" autoplay></video>
-        <div id="countdown"></div>
+      <div class="row">
+        <div id="video-container">
+          <video id="video" autoplay></video>
+          <div id="countdown"></div>
+        </div>
+        <div id="session-photos"></div>
       </div>
-      <div id="session-photos"></div>
     </div>
     <div class="step" id="step-2">
-      <div id="status">Waiting...</div>
+      <div id="status">Carregando...</div>
       <div id="carousel"></div>
     </div>
     <div class="step" id="step-3">
-      <img id="final-image" src="" alt="Final Image" />
+      <div class="row">
+        <img id="final-image" src="" alt="Final Image" />
+      </div>
     </div>
     <script src="src/renderer.js"></script>
   </body>

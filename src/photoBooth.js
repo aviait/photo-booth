@@ -17,22 +17,36 @@ async function processPhotos(photoDataArray, templateConfig) {
     return image;
   }));
 
-  let finalImage;
-  if (templateConfig.templateImage) {
-    finalImage = await Jimp.read(templateConfig.templateImage);
+  let printerFinalImage;
+  let instagramFinalImage;
+  if (templateConfig.instagram.templateImage) {
+    printerFinalImage = await Jimp.read(templateConfig.print.templateImage);
+    instagramFinalImage = await Jimp.read(templateConfig.instagram.templateImage);
   } else {
-    finalImage = new Jimp(1500, 1000, 'white');
+    printerFinalImage = new Jimp(1500, 1000, 'white');
+    instagramFinalImage = new Jimp(1500, 1000, 'white');
   }
 
   images.forEach((image, index) => {
-    const { width, height, x, y } = templateConfig.photos[index];
+    const { width, height, x, y } = templateConfig.print.photos[index];
     image.resize(width, height);
-    finalImage.composite(image, x, y);
+    printerFinalImage.composite(image, x, y);
   });
 
-  const finalImagePath = path.join(captureDir, 'final-image.jpg');
-  await finalImage.writeAsync(finalImagePath);
-  return finalImagePath;
+  images.forEach((image, index) => {
+    const { width, height, x, y } = templateConfig.instagram.photos[index];
+    image.resize(width, height);
+    instagramFinalImage.composite(image, x, y);
+  });
+
+  const printerFinalImagePath = path.join(captureDir, 'printer-final-image.jpg');
+  await printerFinalImage.writeAsync(printerFinalImagePath);
+
+  const instagramFinalImagePath = path.join(captureDir, 'printer-instagram-image.jpg');
+  await instagramFinalImage.writeAsync(instagramFinalImagePath);
+
+
+  return { printerFinalImagePath, instagramFinalImagePath };
 }
 
 module.exports = { processPhotos };
