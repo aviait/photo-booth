@@ -1,3 +1,2 @@
-2024/06/01-17:54:19.596 3230 Reusing MANIFEST C:\Users\Info4k\Projects\umad\photo-booth\tokens\advalentina1\Default\shared_proto_db/MANIFEST-000001
-2024/06/01-17:54:19.597 3230 Recovering log #3
-2024/06/01-17:54:19.597 3230 Reusing old log C:\Users\Info4k\Projects\umad\photo-booth\tokens\advalentina1\Default\shared_proto_db/000003.log 
+2024/06/02-22:35:03.561 2080 Creating DB C:\Users\Info4k\Projects\umad\photo-booth\tokens\advalentina1\Default\shared_proto_db since it was missing.
+2024/06/02-22:35:03.564 2080 Reusing MANIFEST C:\Users\Info4k\Projects\umad\photo-booth\tokens\advalentina1\Default\shared_proto_db/MANIFEST-000001

@@ -1,6 +1,2 @@
-2024/06/01-17:54:19.583 1280 Reusing MANIFEST C:\Users\Info4k\Projects\umad\photo-booth\tokens\advalentina1\Default\Local Storage\leveldb/MANIFEST-000001
-2024/06/01-17:54:19.583 1280 Recovering log #3
-2024/06/01-17:54:19.584 1280 Reusing old log C:\Users\Info4k\Projects\umad\photo-booth\tokens\advalentina1\Default\Local Storage\leveldb/000003.log 
-2024/06/01-21:15:19.900 1280 Level-0 table #5: started
-2024/06/01-21:15:19.902 1280 Level-0 table #5: 17239 bytes OK
-2024/06/01-21:15:19.904 1280 Delete type=0 #3
+2024/06/02-22:35:03.530 47fc Creating DB C:\Users\Info4k\Projects\umad\photo-booth\tokens\advalentina1\Default\Local Storage\leveldb since it was missing.
+2024/06/02-22:35:03.543 47fc Reusing MANIFEST C:\Users\Info4k\Projects\umad\photo-booth\tokens\advalentina1\Default\Local Storage\leveldb/MANIFEST-000001

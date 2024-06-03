@@ -148,10 +148,10 @@ ipcMain.on("process-photos", async (event, { photoDataArray }) => {
 
     for (const phone of phones) {
       console.log({ phone });
-      await sendImage(phone, instagramFinalImagePath);
-      await sleep(2000);
-      await sendImage(phone, printerFinalImagePath);
-      await sleep(2000);
+      sendImage(phone, instagramFinalImagePath);
+      await sleep(1000);
+      sendImage(phone, printerFinalImagePath);
+      await sleep(1000);
     }
   }
 });
