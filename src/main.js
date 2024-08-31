@@ -56,7 +56,7 @@ let globalPhoneNumber;
 ipcMain.on("process-photos", async (event, { photoDataArray }) => {
   const templateConfig = loadTemplateConfig();
   const { printerFinalImagePath, instagramFinalImagePath } =
-    await processPhotos(photoDataArray, templateConfig);
+    await processPhotos(photoDataArray, templateConfig, globalPhoneNumber);
   event.reply("photo-session-complete", printerFinalImagePath);
 
   // const printerConfig = loadPrinterConfig();

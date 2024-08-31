@@ -1,36 +1,35 @@
-document.addEventListener('DOMContentLoaded', async () => {
-  const startButton = document.getElementById('start-button');
-  const phoneNumberInput = document.getElementById('phone-number');
-  const status = document.getElementById('status');
-  const finalImage = document.getElementById('final-image');
-  const carousel = document.getElementById('carousel');
-  const videoContainer = document.getElementById('video-container');
-  const videoElement = document.getElementById('video');
-  const countdown = document.getElementById('countdown');
-  const sessionPhotos = document.getElementById('session-photos');
-  const steps = document.querySelectorAll('.step');
+document.addEventListener("DOMContentLoaded", async () => {
+  const startButton = document.getElementById("start-button");
+  const phoneNumberInput = document.getElementById("phone-number");
+  const status = document.getElementById("status");
+  const finalImage = document.getElementById("final-image");
+  const carousel = document.getElementById("carousel");
+  const videoContainer = document.getElementById("video-container");
+  const videoElement = document.getElementById("video");
+  const countdown = document.getElementById("countdown");
+  const sessionPhotos = document.getElementById("session-photos");
+  const steps = document.querySelectorAll(".step");
 
   let currentStep = 0;
 
-
   function showStep(step) {
     steps.forEach((el, index) => {
-      el.style.display = index === step ? 'block' : 'none';
+      el.style.display = index === step ? "block" : "none";
     });
     currentStep = step;
   }
 
   async function startCountdown(seconds) {
-    countdown.style.display = 'block';
-    countdown.innerText = 'Sorria';
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    countdown.style.display = "block";
+    countdown.innerText = "Sorria";
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     for (let i = seconds; i > 0; i--) {
       countdown.innerText = i;
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
 
-    countdown.style.display = 'none';
+    countdown.style.display = "none";
   }
 
   function resetPhotos() {
@@ -40,14 +39,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     while (sessionPhotos.firstChild) {
       sessionPhotos.removeChild(sessionPhotos.firstChild);
     }
-    finalImage.src = '';
+    finalImage.src = "";
   }
 
   async function startPhotoSession() {
     window.electron.sendPhoneNumber();
     resetPhotos();
-    console.log('Start button clicked');
-    status.innerText = 'Starting photo session...';
+    console.log("Start button clicked");
+    status.innerText = "Starting photo session...";
     showStep(1);
 
     const photoDataArray = [];
@@ -56,54 +55,63 @@ document.addEventListener('DOMContentLoaded', async () => {
       await startCountdown(3);
 
       console.log(`Capturing photo ${i}`);
-      const canvas = document.createElement('canvas');
+      const canvas = document.createElement("canvas");
       canvas.width = videoElement.videoWidth;
       canvas.height = videoElement.videoHeight;
-      const context = canvas.getContext('2d');
+      const context = canvas.getContext("2d");
       context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
 
-      const photoData = canvas.toDataURL('image/jpeg');
+      const photoData = canvas.toDataURL("image/jpeg");
       photoDataArray.push(photoData);
 
       status.innerText = `Photo ${i} captured`;
 
-      const imgElement = document.createElement('img');
+      const imgElement = document.createElement("img");
       imgElement.src = photoData;
       imgElement.setAttribute("class", "photo-captured");
       sessionPhotos.appendChild(imgElement);
 
       // Exibe a foto capturada no lugar da webcam por 1 segundo
-      videoElement.style.display = 'none';
-      const capturedImage = document.createElement('img');
+      videoElement.style.display = "none";
+      const capturedImage = document.createElement("img");
       capturedImage.src = photoData;
       videoContainer.appendChild(capturedImage);
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       videoContainer.removeChild(capturedImage);
-      videoElement.style.display = 'block';
+      videoElement.style.display = "block";
 
-      await new Promise(resolve => setTimeout(resolve, 2000)); // 2s display time
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // 2s display time
     }
 
     window.electron.sendPhotos(photoDataArray);
   }
 
   async function initWebcam() {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    const devices = await navigator.mediaDevices.enumerateDevices();
+
+    console.log(devices);
+    // const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        deviceId:
+          "70b0875047c0d788a960a8d91806964daacdc4ed5dd7b27323b6091466871f47",
+      },
+    });
     videoElement.srcObject = stream;
   }
 
-  document.addEventListener('keydown', (event) => {
-    if (event.code === 'Space') {
+  document.addEventListener("keydown", (event) => {
+    if (event.code === "Space") {
       startPhotoSession();
     }
   });
 
-  startButton.addEventListener('click', startPhotoSession);
+  startButton.addEventListener("click", startPhotoSession);
 
   window.electron.onPhotoSessionComplete((finalImagePath) => {
-    const status = document.getElementById('status');
-    const finalImage = document.getElementById('final-image');
-    status.innerText = 'Photo session complete';
+    const status = document.getElementById("status");
+    const finalImage = document.getElementById("final-image");
+    status.innerText = "Photo session complete";
     finalImage.src = finalImagePath;
     showStep(3);
   });
