@@ -25,10 +25,13 @@ function processNumber(input) {
     if (cleanedInput.length === 13) {
         const correctedNumber = cleanedInput.slice(0, 4) + cleanedInput.slice(5);
         console.log(`Número ajustado para 12 dígitos: ${correctedNumber}`);
+        return correctedNumber
     } else if (cleanedInput.length === 12) {
         console.log(`Número de 12 dígitos: ${cleanedInput}`);
+        console.log(cleanedInput)
     } else {
         invalidNumbers.push(input);
+        return '';
     }
 }
 
@@ -52,6 +55,7 @@ const convertImageToBase64 = (imagePath) => {
 
 const sendImageBase64 = async (base64Image, whatsappNumber) => {
     try {
+
         const response = await axios.post('https://api.whatsapp.aviait.com.br/send-image', {
             sessionName: "semadpb",
             phoneNumber: whatsappNumber,
@@ -79,7 +83,7 @@ const main = async () => {
 
         const imagePath = path.join(capturesPath, folder, 'printer-final-image.jpg');
 
-        if (fs.existsSync(imagePath) && whatsappNumber && whatsappNumber.length > 0) {
+        if (fs.existsSync(imagePath) && whatsappNumber && whatsappNumber.length > 0 && processNumber(whatsappNumber)) {
             const base64Image = convertImageToBase64(imagePath);
             await sendImageBase64(base64Image, whatsappNumber);
             await sleep(aletatoryTime());
