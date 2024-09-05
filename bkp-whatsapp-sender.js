@@ -4,6 +4,15 @@ const axios = require('axios');
 
 const capturesPath = path.join(__dirname, 'src', 'captures');
 
+const text = `Olá, a paz do Senhor! 🙏 Espero que você tenha sido abençoado por nossos dias de conferência. Estamos te encaminhando a foto que tiramos na cabine fotográfica. Espero que tenha gostado!
+
+Se precisar de mais informações sobre a cabine fotográfica ou desejar algo mais, fique à vontade para entrar em contato com o Enoque pelo telefone/whatsapp (83) 98676-6112.
+
+Deus abençoe e até a próxima!
+
+*Conferência Missionária 2024*
+`
+
 function aletatoryTime() {
     return Math.random() * 10000
 }
