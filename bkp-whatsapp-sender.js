@@ -17,6 +17,22 @@ function aletatoryTime() {
     return Math.random() * 10000
 }
 
+const invalidNumbers = []; // Array para armazenar números inválidos
+
+function processNumber(input) {
+    const cleanedInput = input.replace(/\D/g, '');
+
+    if (cleanedInput.length === 13) {
+        const correctedNumber = cleanedInput.slice(0, 4) + cleanedInput.slice(5);
+        console.log(`Número ajustado para 12 dígitos: ${correctedNumber}`);
+    } else if (cleanedInput.length === 12) {
+        console.log(`Número de 12 dígitos: ${cleanedInput}`);
+    } else {
+        invalidNumbers.push(input);
+    }
+}
+
+
 function sleep(time) {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -40,7 +56,7 @@ const sendImageBase64 = async (base64Image, whatsappNumber) => {
             sessionName: "semadpb",
             phoneNumber: whatsappNumber,
             imageBase64: base64Image,
-            message: `Olá`
+            message: text
         });
 
         console.log(`Imagem enviada para ${whatsappNumber}:`, response.data);
@@ -67,10 +83,14 @@ const main = async () => {
             const base64Image = convertImageToBase64(imagePath);
             await sendImageBase64(base64Image, whatsappNumber);
             await sleep(aletatoryTime());
+            await sendImageBase64(base64Image, processNumber(whatsappNumber));
+            await sleep(aletatoryTime());
         } else {
             console.warn(`Imagem não encontrada para a pasta ${folder}`);
         }
     }
+
+    console.log(invalidNumbers)
 };
 
 main();
